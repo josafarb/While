@@ -33,9 +33,11 @@ public interface Linguagem {
 
 	class Programa {
 		private List<Comando> comandos;
+
 		public Programa(List<Comando> comandos) {
 			this.comandos = comandos;
 		}
+
 		public void execute() {
 			for (Comando comando : comandos) {
 				comando.execute();
@@ -64,6 +66,7 @@ public interface Linguagem {
 	}
 
 	Skip skip = new Skip();
+
 	class Skip implements Comando {
 		@Override
 		public void execute() {
@@ -177,6 +180,7 @@ public interface Linguagem {
 	}
 
 	Leia leia = new Leia();
+
 	class Leia implements Expressao {
 		@Override
 		public int getValor() {
@@ -194,8 +198,7 @@ public interface Linguagem {
 			return esq.getValor() + dir.getValor();
 		}
 	}
-	
-	
+
 	class ExpDivisao extends ExpBin {
 		public ExpDivisao(Expressao esq, Expressao dir) {
 			super(esq, dir);
@@ -206,8 +209,7 @@ public interface Linguagem {
 			return esq.getValor() / dir.getValor();
 		}
 	}
-	
-	
+
 	class ExpPonenciacao extends ExpBin {
 		public ExpPonenciacao(Expressao esq, Expressao dir) {
 			super(esq, dir);
@@ -215,12 +217,10 @@ public interface Linguagem {
 
 		@Override
 		public int getValor() {
-			return (int) Math.pow(esq.getValor(), dir.getValor()) ;
-			
+			return (int) Math.pow(esq.getValor(), dir.getValor());
+
 		}
 	}
-	
-	
 
 	class ExpSub extends ExpBin {
 		public ExpSub(Expressao esq, Expressao dir) {
@@ -232,7 +232,7 @@ public interface Linguagem {
 			return esq.getValor() - dir.getValor();
 		}
 	}
-	
+
 	class ExpMult extends ExpBin {
 		public ExpMult(Expressao esq, Expressao dir) {
 			super(esq, dir);
@@ -290,6 +290,30 @@ public interface Linguagem {
 			return esq.getValor() <= dir.getValor();
 		}
 	}
+	
+
+	public class ExpMaiorIgual extends ExpRel {
+		public ExpMaiorIgual(Expressao esq, Expressao dir) {
+			super(esq, dir);
+		}
+
+		@Override
+		public boolean getValor() {
+			return esq.getValor() >= dir.getValor();
+		}
+	}
+	
+	
+	public class ExpDiferente extends ExpRel {
+		public ExpDiferente(Expressao esq, Expressao dir) {
+			super(esq, dir);
+		}
+
+		@Override
+		public boolean getValor() {
+			return esq.getValor() != dir.getValor();
+		}
+	}
 
 	public class NaoLogico implements Bool {
 		private Bool b;
@@ -317,5 +341,22 @@ public interface Linguagem {
 		public boolean getValor() {
 			return esq.getValor() && dir.getValor();
 		}
+
+		public class OuLogico implements Bool {
+			private Bool esq;
+			private Bool dir;
+
+			public OuLogico(Bool esq, Bool dir) {
+				this.esq = esq;
+				this.dir = dir;
+			}
+
+			@Override
+			public boolean getValor() {
+				return esq.getValor() || dir.getValor();
+			}
+		}
 	}
+}
+
 }
