@@ -113,6 +113,12 @@ public class MeuListener extends EnquantoBaseListener {
 		case "-":
 			exp = new ExpSub(esq, dir);
 			break;
+		case "/":
+			exp = new ExpDivisao(esq,dir);
+			break;
+		case "^":
+			exp = new ExpPonenciacao(esq,dir);
+			break;
 		default:
 			exp = new ExpSoma(esq, dir);
 		}
