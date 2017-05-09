@@ -6,9 +6,15 @@ seqComando: comando (';' comando)* ;
 
 comando: ID ':=' expressao                          # atribuicao
        | 'skip'                                     # skip
-       | 'se' bool 'entao' comando ( 'senaose' bool 'entao' comando )? 'senao' comando  # se
+       | 'se' bool 'entao' comando
+             ( 'senaose' bool 'entao' comando )?
+             'senao' comando  # se
        | 'enquanto' bool 'faca' comando             # enquanto
-       | 'para' ID 'de' INT 'ate' expressao ( 'passo' expressao )? 'faca' comando  # para
+       | 'para' ID 'de' INT 'ate' expressao
+             ( 'passo' expressao )? 'faca' comando  # para
+       | 'escolha' expressao
+             ( 'caso' expressao ':' comando )*
+             ('outro' ':' comando )                     # escolha
        | 'exiba' Texto                              # exiba
        | 'escreva' expressao                        # escreva
        | '{' seqComando '}'                         # bloco
