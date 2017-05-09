@@ -2,7 +2,7 @@ grammar Enquanto;
 
 programa : seqComando;     // sequência de comandos
 
-seqComando: comando (';' comando)* ;
+seqComando: comando (';' comando?)* ;
 
 comando: ID ':=' expressao                          # atribuicao
        | 'skip'                                     # skip
@@ -10,7 +10,7 @@ comando: ID ':=' expressao                          # atribuicao
              ( 'senaose' bool 'entao' comando )?
              'senao' comando  # se
        | 'enquanto' bool 'faca' comando             # enquanto
-       | 'para' ID 'de' INT 'ate' expressao
+       | 'para' ID 'de' expressao 'ate' expressao
              ( 'passo' expressao )? 'faca' comando  # para
        | 'escolha' expressao
              ( 'caso' expressao ':' comando )*

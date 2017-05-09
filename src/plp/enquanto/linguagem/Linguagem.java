@@ -40,7 +40,8 @@ public interface Linguagem {
 
 		public void execute() {
 			for (Comando comando : comandos) {
-				comando.execute();
+				if (comando != null)
+					comando.execute();
 			}
 		}
 	}
@@ -99,6 +100,46 @@ public interface Linguagem {
 		public void execute() {
 			while (condicao.getValor()) {
 				faca.execute();
+			}
+		}
+	}
+
+	class Para implements Comando {
+		private String id;
+		private Expressao inicio;
+		private Expressao fim;
+		private Expressao passo;
+		private Comando faca;
+
+		public Para(String id, Expressao inicio, Expressao fim, Expressao passo, Comando faca)
+		{
+			this.id = id;
+			this.inicio = inicio;
+			this.fim = fim;
+			this.passo = passo;
+			this.faca = faca;
+		}
+
+		@Override
+		public void execute() {
+			int passo = (this.passo == null ? 1 : this.passo.getValor());
+			if (passo > 0)
+			{
+				for (int i = this.inicio.getValor(); i <= (this.fim.getValor()); i += passo)
+				{
+					ambiente.put(this.id, i);
+					this.faca.execute();
+					i = ambiente.get(this.id);
+				}
+			}
+			else
+			{
+				for (int i = this.inicio.getValor(); i >= (this.fim.getValor()); i -= passo)
+				{
+					ambiente.put(this.id, i);
+					this.faca.execute();
+					i = ambiente.get(this.id);
+				}
 			}
 		}
 	}
@@ -290,7 +331,7 @@ public interface Linguagem {
 			return esq.getValor() <= dir.getValor();
 		}
 	}
-	
+
 
 	public class ExpMaiorIgual extends ExpRel {
 		public ExpMaiorIgual(Expressao esq, Expressao dir) {
@@ -302,8 +343,8 @@ public interface Linguagem {
 			return esq.getValor() >= dir.getValor();
 		}
 	}
-	
-	
+
+
 	public class ExpDiferente extends ExpRel {
 		public ExpDiferente(Expressao esq, Expressao dir) {
 			super(esq, dir);

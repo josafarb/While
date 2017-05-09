@@ -39,7 +39,7 @@ public class MeuListener extends EnquantoBaseListener {
 
 	@Override
 	public void exitSe(final EnquantoParser.SeContext ctx) {
-		final Bool condicao = (Bool) getValue(ctx.bool());
+		final Bool condicao = (Bool) getValue(ctx.bool(0));
 		final Comando entao = (Comando) getValue(ctx.comando(0));
 		final Comando senao = (Comando) getValue(ctx.comando(1));
 		setValue(ctx, new Se(condicao, entao, senao));
@@ -185,5 +185,24 @@ public class MeuListener extends EnquantoBaseListener {
 			exp = new ExpIgual(esq, dir);
 		}
 		setValue(ctx, exp);
+	}
+
+	@Override
+	public void enterPara(EnquantoParser.ParaContext ctx)
+	{
+		super.enterPara(ctx);
+	}
+
+	@Override
+	public void exitPara(EnquantoParser.ParaContext ctx)
+	{
+		final String id = ctx.ID().getText();
+		final Expressao inicio = (Expressao) getValue(ctx.expressao(0));
+		final Expressao fim = (Expressao) getValue(ctx.expressao(1));
+		Expressao passo = null;
+		if (ctx.expressao().size() > 2)
+			passo = (Expressao) getValue(ctx.expressao(2));
+		final Comando faca = (Comando) getValue(ctx.comando());
+		setValue(ctx, new Para(id, inicio, fim, passo, faca));
 	}
 }
