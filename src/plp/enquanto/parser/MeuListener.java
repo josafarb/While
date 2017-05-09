@@ -41,7 +41,15 @@ public class MeuListener extends EnquantoBaseListener {
 	public void exitSe(final EnquantoParser.SeContext ctx) {
 		final Bool condicao = (Bool) getValue(ctx.bool(0));
 		final Comando entao = (Comando) getValue(ctx.comando(0));
-		final Comando senao = (Comando) getValue(ctx.comando(1));
+		Comando senao = null;
+		if (ctx.comando().size() == 3)							// Se "senãose" presente
+			senao = new Se(
+				(Bool) getValue(ctx.bool(1)),
+				(Comando) getValue(ctx.comando(1)),
+				(Comando) getValue(ctx.comando(2))
+			);
+		else													// Se "senaose" não presente, tratar como senão.
+			senao = (Comando) getValue(ctx.comando(1));
 		setValue(ctx, new Se(condicao, entao, senao));
 	}
 
