@@ -79,6 +79,18 @@ public interface EnquantoListener extends ParseTreeListener {
 	 */
 	void exitInteiro(@NotNull EnquantoParser.InteiroContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code quebrar}
+	 * labeled alternative in {@link EnquantoParser#comando}.
+	 * @param ctx the parse tree
+	 */
+	void enterQuebrar(@NotNull EnquantoParser.QuebrarContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code quebrar}
+	 * labeled alternative in {@link EnquantoParser#comando}.
+	 * @param ctx the parse tree
+	 */
+	void exitQuebrar(@NotNull EnquantoParser.QuebrarContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code bloco}
 	 * labeled alternative in {@link EnquantoParser#comando}.
 	 * @param ctx the parse tree
@@ -185,6 +197,18 @@ public interface EnquantoListener extends ParseTreeListener {
 	 */
 	void exitSe(@NotNull EnquantoParser.SeContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code escolha}
+	 * labeled alternative in {@link EnquantoParser#comando}.
+	 * @param ctx the parse tree
+	 */
+	void enterEscolha(@NotNull EnquantoParser.EscolhaContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code escolha}
+	 * labeled alternative in {@link EnquantoParser#comando}.
+	 * @param ctx the parse tree
+	 */
+	void exitEscolha(@NotNull EnquantoParser.EscolhaContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code exiba}
 	 * labeled alternative in {@link EnquantoParser#comando}.
 	 * @param ctx the parse tree
@@ -196,6 +220,30 @@ public interface EnquantoListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExiba(@NotNull EnquantoParser.ExibaContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code para}
+	 * labeled alternative in {@link EnquantoParser#comando}.
+	 * @param ctx the parse tree
+	 */
+	void enterPara(@NotNull EnquantoParser.ParaContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code para}
+	 * labeled alternative in {@link EnquantoParser#comando}.
+	 * @param ctx the parse tree
+	 */
+	void exitPara(@NotNull EnquantoParser.ParaContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code xorLogico}
+	 * labeled alternative in {@link EnquantoParser#bool}.
+	 * @param ctx the parse tree
+	 */
+	void enterXorLogico(@NotNull EnquantoParser.XorLogicoContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code xorLogico}
+	 * labeled alternative in {@link EnquantoParser#bool}.
+	 * @param ctx the parse tree
+	 */
+	void exitXorLogico(@NotNull EnquantoParser.XorLogicoContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code booleano}
 	 * labeled alternative in {@link EnquantoParser#bool}.

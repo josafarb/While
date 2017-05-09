@@ -35,7 +35,10 @@ expressao: INT                                      # inteiro
 bool: ('verdadeiro'|'falso')                        # booleano
     | expressao '=' expressao                       # opRel
     | expressao '<=' expressao                      # opRel
+    | expressao '>=' expressao                      # opRel
     | 'nao' bool                                    # naoLogico
+    | 'ou' bool                                     # naoLogico
+    | 'xor' bool                                    # xorLogico
     | bool 'e' bool                                 # eLogico
     | '(' bool ')'                                  # boolPar
     ;
