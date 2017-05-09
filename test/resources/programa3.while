@@ -1,0 +1,8 @@
+n := leia;
+a := 5;
+para i de 1 ate 10 faca
+  escolha n
+    caso a: escreva a
+    caso 2: exiba "Dois"
+    caso 3: exiba "Tres"
+    outro : {exiba "outro"; a := a - 1}

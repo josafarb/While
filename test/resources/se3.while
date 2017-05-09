@@ -1,0 +1,7 @@
+se verdadeiro entao
+  exiba "se"
+senaose verdadeiro entao
+  exiba "senao se"
+senao
+  exiba "senao";
+

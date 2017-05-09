@@ -1,0 +1,8 @@
+n := 3;
+escolha n
+	caso 1: exiba "um"
+	caso 2: exiba "dois"
+	caso 3: exiba "tres"
+	caso 4: exiba "quatro"
+	caso 5: exiba "cinco"
+	outro: exiba "fora de alcance."
