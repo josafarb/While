@@ -1,9 +1,6 @@
 package plp.enquanto.linguagem;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public interface Linguagem {
 	final Map<String, Integer> ambiente = new HashMap<>();
@@ -141,6 +138,59 @@ public interface Linguagem {
 					i = ambiente.get(this.id);
 				}
 			}
+		}
+	}
+
+	class Caso implements Comando
+	{
+		private Expressao expressao;
+
+		private Comando comando;
+
+		public Caso(Expressao expressao, Comando comando)
+		{
+			this.expressao = expressao;
+			this.comando = comando;
+		}
+
+		@Override
+		public void execute()
+		{
+			this.comando.execute();
+		}
+	}
+
+	class Escolha implements Comando {
+		private Expressao expressao;
+		private List<Caso> casos;
+		private Caso outro;
+
+		public Escolha(Expressao expressao) {
+			this.expressao = expressao;
+			this.casos = new ArrayList<>();
+			this.outro = null;
+		}
+
+		public void adicionar(Caso caso) {
+			this.casos.add(caso);
+		}
+
+		public void outro(Caso outro)
+		{
+			this.outro = outro;
+		}
+
+		@Override
+		public void execute() {
+			int valorExpressao = this.expressao.getValor();
+			for (Caso caso : this.casos) {
+				if (caso.expressao.getValor() == valorExpressao) {
+					caso.comando.execute();
+					return;
+				}
+			}
+			if (this.outro != null)
+				this.outro.execute();
 		}
 	}
 

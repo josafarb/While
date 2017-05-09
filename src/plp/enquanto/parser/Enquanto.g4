@@ -14,7 +14,7 @@ comando: ID ':=' expressao                          # atribuicao
              ( 'passo' expressao )? 'faca' comando  # para
        | 'escolha' expressao
              ( 'caso' expressao ':' comando )*
-             ('outro' ':' comando )                     # escolha
+             ('outro' ':' comando )?                # escolha
        | 'exiba' Texto                              # exiba
        | 'escreva' expressao                        # escreva
        | '{' seqComando '}'                         # bloco

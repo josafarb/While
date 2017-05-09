@@ -213,4 +213,16 @@ public class MeuListener extends EnquantoBaseListener {
 		final Comando faca = (Comando) getValue(ctx.comando());
 		setValue(ctx, new Para(id, inicio, fim, passo, faca));
 	}
+
+	@Override
+	public void exitEscolha(EnquantoParser.EscolhaContext ctx)
+	{
+		final Expressao expressao = (Expressao) getValue(ctx.expressao(0));
+		Escolha escolha = new Escolha(expressao);
+		for (int i = 1; i < ctx.expressao().size(); i++) 		// Casos
+			escolha.adicionar(new Caso((Expressao) getValue(ctx.expressao(i)), (Comando) getValue(ctx.comando(i-1))));
+		if (ctx.comando().size() == ctx.expressao().size())		// Caso "outro"
+			escolha.outro(new Caso(null, (Comando) getValue(ctx.comando(ctx.comando().size()-1))));
+		setValue(ctx, escolha);
+	}
 }
