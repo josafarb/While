@@ -12,6 +12,7 @@ comando: ID ':=' expressao                          # atribuicao
        | 'enquanto' bool 'faca' comando             # enquanto
        | 'para' ID 'de' expressao 'ate' expressao
              ( 'passo' expressao )? 'faca' comando  # para
+       | 'quebrar' (INT)?                           # quebrar
        | 'escolha' expressao
              ( 'caso' expressao ':' comando )*
              ('outro' ':' comando )?                # escolha

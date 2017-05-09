@@ -1,0 +1,6 @@
+n := 100;
+para i de 1 ate n faca
+  se i = 10 entao
+    quebrar
+  senao
+    escreva i;

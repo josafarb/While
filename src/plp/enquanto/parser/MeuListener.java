@@ -3,6 +3,7 @@ package plp.enquanto.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 
@@ -14,9 +15,25 @@ public class MeuListener extends EnquantoBaseListener {
 	private final ParseTreeProperty<Object> values = new ParseTreeProperty<>();
 
 	private Programa programa;
+	private List<ErrorNode> errors;
+
+	public MeuListener()
+	{
+		this.errors = new ArrayList<>();
+	}
 
 	public Programa getPrograma() {
 		return programa;
+	}
+
+	public boolean hasError()
+	{
+		return !this.errors.isEmpty();
+	}
+
+	public List<ErrorNode> getErrors()
+	{
+		return this.errors;
 	}
 
 	private void setValue(final ParseTree node, final Object value) {
@@ -224,5 +241,20 @@ public class MeuListener extends EnquantoBaseListener {
 		if (ctx.comando().size() == ctx.expressao().size())		// Caso "outro"
 			escolha.outro(new Caso(null, (Comando) getValue(ctx.comando(ctx.comando().size()-1))));
 		setValue(ctx, escolha);
+	}
+
+	@Override
+	public void visitErrorNode(ErrorNode node)
+	{
+		this.errors.add(node);
+	}
+
+	@Override
+	public void exitQuebrar(EnquantoParser.QuebrarContext ctx)
+	{
+		int contador = 1;
+		if (ctx.INT() != null)
+			contador = Integer.parseInt(ctx.INT().getText());
+		setValue(ctx, new Quebrar(contador));
 	}
 }

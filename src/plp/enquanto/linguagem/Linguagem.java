@@ -71,6 +71,35 @@ public interface Linguagem {
 		}
 	}
 
+	class QuebrarException extends RuntimeException {
+		int contador = 0;
+
+		public QuebrarException(int contador) {
+			this.contador = contador;
+		}
+
+		public int getContador() {
+			return contador;
+		}
+
+		public void decrementarContador() {
+			this.contador--;
+		}
+	}
+
+	class Quebrar implements Comando {
+		int contador;
+
+		public Quebrar(int contador) {
+			this.contador = contador;
+		}
+
+		@Override
+		public void execute() {
+			throw new QuebrarException(this.contador);
+		}
+	}
+
 	class Escreva implements Comando {
 		private Expressao exp;
 
@@ -96,7 +125,13 @@ public interface Linguagem {
 		@Override
 		public void execute() {
 			while (condicao.getValor()) {
-				faca.execute();
+				try {
+					faca.execute();
+				} catch (QuebrarException e) {
+					e.decrementarContador();
+					if (e.getContador() > 0)
+						throw e;
+				}
 			}
 		}
 	}
@@ -108,8 +143,7 @@ public interface Linguagem {
 		private Expressao passo;
 		private Comando faca;
 
-		public Para(String id, Expressao inicio, Expressao fim, Expressao passo, Comando faca)
-		{
+		public Para(String id, Expressao inicio, Expressao fim, Expressao passo, Comando faca) {
 			this.id = id;
 			this.inicio = inicio;
 			this.fim = fim;
@@ -120,23 +154,24 @@ public interface Linguagem {
 		@Override
 		public void execute() {
 			int passo = (this.passo == null ? 1 : this.passo.getValor());
-			if (passo > 0)
-			{
-				for (int i = this.inicio.getValor(); i <= (this.fim.getValor()); i += passo)
-				{
-					ambiente.put(this.id, i);
-					this.faca.execute();
-					i = ambiente.get(this.id);
+			try {
+				if (passo > 0) {
+					for (int i = this.inicio.getValor(); i <= (this.fim.getValor()); i += passo) {
+						ambiente.put(this.id, i);
+						this.faca.execute();
+						i = ambiente.get(this.id);
+					}
+				} else {
+					for (int i = this.inicio.getValor(); i >= (this.fim.getValor()); i += passo) {
+						ambiente.put(this.id, i);
+						this.faca.execute();
+						i = ambiente.get(this.id);
+					}
 				}
-			}
-			else
-			{
-				for (int i = this.inicio.getValor(); i >= (this.fim.getValor()); i += passo)
-				{
-					ambiente.put(this.id, i);
-					this.faca.execute();
-					i = ambiente.get(this.id);
-				}
+			} catch (QuebrarException e) {
+				e.decrementarContador();
+				if (e.getContador() > 0)
+					throw e;
 			}
 		}
 	}

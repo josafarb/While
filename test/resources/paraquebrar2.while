@@ -1,0 +1,12 @@
+para i de 1 ate 10 faca
+  para j de 1 ate 10 faca
+  {
+    escreva j;
+    se i = 3 entao
+      se j = 4 entao
+        quebrar 2
+      senao
+        skip
+    senao
+      skip;
+  }

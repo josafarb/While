@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
@@ -18,8 +19,10 @@ public class Principal {
 	{
 		final CharStream input = CharStreams.fromFileName(path);
 		final EnquantoLexer lexer = new EnquantoLexer(input);
+		lexer.removeErrorListeners();
 		final CommonTokenStream tokens = new CommonTokenStream(lexer);
 		final EnquantoParser parser = new EnquantoParser(tokens);
+		parser.removeErrorListeners();
 		return parser.programa();
 	}
 
@@ -30,8 +33,20 @@ public class Principal {
 			final ParseTreeWalker walker = new ParseTreeWalker();
 			final MeuListener listener = new MeuListener();
 			walker.walk(listener, tree);
-			// TODO Checar erros no processo de "parse"
-			listener.getPrograma().execute();
+
+			// TODO: Melhorar error handling
+			if (listener.hasError()) {
+				for (ErrorNode err : listener.getErrors()) {
+					System.err.println(String.format(
+						"%s:%d: error: %s",
+						arg,
+						err.getSymbol().getLine(),
+						err.getSymbol().getText()
+					));
+				}
+				System.exit(1);
+			} else
+				listener.getPrograma().execute();
 		}
 	}
 }
