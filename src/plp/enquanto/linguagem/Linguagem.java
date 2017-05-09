@@ -134,7 +134,7 @@ public interface Linguagem {
 			}
 			else
 			{
-				for (int i = this.inicio.getValor(); i >= (this.fim.getValor()); i -= passo)
+				for (int i = this.inicio.getValor(); i >= (this.fim.getValor()); i += passo)
 				{
 					ambiente.put(this.id, i);
 					this.faca.execute();

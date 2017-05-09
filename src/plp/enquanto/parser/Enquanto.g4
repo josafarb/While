@@ -39,7 +39,7 @@ bool: ('verdadeiro'|'falso')                        # booleano
     | '(' bool ')'                                  # boolPar
     ;
 
-INT: ('0'..'9')+ ;
+INT: '-'?('0'..'9')+ ;
 ID: ('a'..'z')+;
 Texto: '"' .*? '"';
 
