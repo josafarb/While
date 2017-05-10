@@ -1,6 +1,7 @@
 #!/bin/bash
+trap - SIGINT
 shopt -s expand_aliases
-alias enquanto="java -classpath ../target/output/:../antlr-runtime-4.7.jar plp.enquanto.Principal"
+alias enquanto="java -classpath ../bin/:../antlr-runtime-4.7.jar plp.enquanto.Principal"
 FILES=resources/*.while
 tmp=`mktemp`
 tmpdiff=`mktemp`
@@ -16,9 +17,9 @@ function check_outputs {
 	diff $out $tmp &> $tmpdiff
 	result=$?
 	if [ $result == "0" ]; then
-		echo -e "${prefixo}  - \e[32mOK\e[39m"
+		echo -e " [\e[32mOK\e[39m]"
 	else
-		echo "${prefixo}  - Diferença na saída"
+		echo " [\e[31mDiferença na saída\e[39m"
 		echo -e "${prefixo}  - \e[31m`cat $tmpdiff`\e[39m"
 	fi
 }
@@ -37,26 +38,33 @@ function run_file {
 	if [ $status == "0" ]; then
 		check_outputs $saidaesperada $saida "$prefixo"
 	else
-		echo "${prefixo}  - Erro na compilação"
-		echo -e "${prefixo}  - \e[31m`cat $saida`\e[39m"
+	    if [ -f $saidaesperada ]; then
+            echo -e "$ [\e[31mErro na compilação\e[39m]"
+            echo ""
+            echo -e "${prefixo}  - \e[31m`cat $saida`\e[39m"
+        else
+		    echo -e "${prefixo}  - \e[32mOK\e[93m com erro esperado\e[39m"
+        fi
 	fi
 }
+test_idx=0
 for f in $FILES
 do
+    let "test_idx++"
 	basename=$(basename "$f")
 	name="${basename%.*}"
 	in="resources/${name}*.in"
 	out=resources/${name}.out
-	echo "Checking $name"
-	echo "============="
+	echo -n "${test_idx}) Checking $name"
 	if compgen -G $in > /dev/null; then
+	    echo ""
 		i=0
 		for input in $in
 		do
 			let "i++"
 			input_basename=$(basename "$input")
 			input_name="${input_basename%.*}"
-			echo "  Caso $i ($input_name): "
+			echo -n "  Caso ${i} (${input_name})"
 			enquanto $f < $input &> $tmp
 			run_file $? "resources/${input_name}.out" $tmp "  "
 		done

@@ -1,0 +1,6 @@
+a = 5/2;
+b = 20/1;
+c = b/a;
+exiba a;
+exiba b;
+exiba c;
