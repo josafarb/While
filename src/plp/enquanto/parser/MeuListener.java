@@ -142,7 +142,7 @@ public class MeuListener extends EnquantoBaseListener {
 			exp = new ExpDivisao(esq,dir);
 			break;
 		case "^":
-			exp = new ExpPonenciacao(esq,dir);
+			exp = new ExpPonenciacao(esq, dir);
 			break;
 		default:
 			exp = new ExpSoma(esq, dir);

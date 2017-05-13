@@ -7,11 +7,10 @@ senao skip;
 
 b := 3^2;
 se b<>9 entao
-  exiba "'^' erro 1" 
+  exiba "'^' erro 1"
 senao skip;
 
 c := 2^3^2;
-escreva c;
 se c=512 entao skip
 senao
   exiba "'^' erro 2";
@@ -35,16 +34,16 @@ senao skip;
 
 s:=0;
 para x de 1 ate 5 faca
-  s := s + x
-fim
+  s := s + x;
+
 se s<>15 entao
   exiba "'para' erro"
 senao skip;
 
 nota := 5;
-se nota > 6 entao
+se nota >= 6 entao
   exiba "Aprovado"
-senaose nota > 3 entao
+senaose nota >= 3 entao
   exiba "Recuperação"
 senao
   exiba "Reprovado"
