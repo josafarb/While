@@ -46,4 +46,4 @@ se nota > 6 entao
 senaose nota > 3 entao
   exiba "Recuperação"
 senao
-  exiba "Reprovado
+  exiba "Reprovado"
