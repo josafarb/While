@@ -7,10 +7,11 @@ senao skip;
 
 b := 3^2;
 se b<>9 entao
-  exiba "'^' erro 1"
+  exiba "'^' erro 1" 
 senao skip;
 
 c := 2^3^2;
+escreva c;
 se c=512 entao skip
 senao
   exiba "'^' erro 2";

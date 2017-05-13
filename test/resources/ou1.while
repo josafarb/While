@@ -1,19 +1,19 @@
-se verdadeiro xor falso entao
+se verdadeiro ou falso entao
   exiba "verdadeiro"
 senao
   exiba "falso";
 
-se verdadeiro xor verdadeiro entao
+se verdadeiro ou verdadeiro entao
   exiba "verdadeiro"
 senao
   exiba "falso";
 
-se falso xor verdadeiro entao
+se falso ou verdadeiro entao
   exiba "verdadeiro"
 senao
   exiba "falso";
 
-se falso xor falso entao
+se falso ou falso entao
   exiba "verdadeiro"
 senao
   exiba "falso";
