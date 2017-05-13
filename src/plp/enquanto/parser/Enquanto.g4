@@ -30,7 +30,7 @@ expressao: INT                                      # inteiro
          | expressao '+' expressao                  # opBin
          | expressao '-' expressao                  # opBin
          | expressao '/' expressao                  # opBin
-         | expressao '^' expressao                  # opBin
+         | <assoc=right> expressao '^' expressao    # opBin
          | '(' expressao ')'                        # expPar
          ;
 
