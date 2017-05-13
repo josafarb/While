@@ -43,7 +43,7 @@ function run_file {
             echo ""
             echo -e "${prefixo}  - \e[31m`cat $saida`\e[39m"
         else
-		    echo -e "${prefixo}  - \e[32mOK\e[93m com erro esperado\e[39m"
+		    echo -e "${prefixo} [\e[32mOK\e[93m] com erro esperado\e[39m"
         fi
 	fi
 }
